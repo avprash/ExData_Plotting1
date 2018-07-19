@@ -1,0 +1,9 @@
+# Set the local file path below
+setwd("give local file path here")
+all_data <- read.csv("household_power_consumption.txt", header = TRUE, sep = ";", na.strings = "?", check.names = FALSE, quote = '\"', comment.char = "", stringsAsFactors = FALSE)
+data_plt <- subset(all_data,Date %in% c("1/2/2007","2/2/2007" ))
+data_plt$Date <- as.Date(data_plt$Date, format = "%d/%m/%Y")
+hist(data_plt$Global_active_power, col = "red", main = "Global Active Power", xlab = "Global Active Power(kilowatts)")
+#png("plot1.png",width = 480, height = 480)
+dev.copy(png, file = "plot1.png", height = 480, width = 480)
+dev.off()

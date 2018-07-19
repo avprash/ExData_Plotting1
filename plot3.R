@@ -1,0 +1,15 @@
+# Set the local file path below
+setwd("give local file path here")
+all_data <- read.csv("household_power_consumption.txt", header = TRUE, sep = ";", na.strings = "?", check.names = FALSE, quote = '\"', comment.char = "", stringsAsFactors = FALSE)
+data_plt <- subset(all_data,Date %in% c("1/2/2007","2/2/2007" ))
+data_plt$Date <- as.Date(data_plt$Date, format = "%d/%m/%Y")
+date_time <- paste(as.Date(data_plt$Date),data_plt$Time)
+data_plt$DateTime <- as.POSIXct(date_time)
+with(data_plt,{
+        plot(Sub_metering_1~DateTime, type = "l", xlab = "", ylab = "Energy sub metering")
+        lines(Sub_metering_2~DateTime, col="Red")
+        lines(Sub_metering_3~DateTime, col="Blue")
+})
+legend("topright", col = c("black","red", "blue"), lty = 1, lwd = 2,legend=c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"), y.intersp = 0.5, x.intersp = 0.1)
+dev.copy(png, file = "plot3.png", height = 480, width = 480)
+dev.off()
